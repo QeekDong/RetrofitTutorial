@@ -5,17 +5,10 @@ package com.stay4it.retrofit.bean;
  * 用于接收登录返回的学生信息
  */
 
-public class StuInfo {
+public class LoginInfo {
     private int code;
     private String message;
-    private StuData stuData;
-
-//    public StuInfo(int code, String message, StuData stuData) {
-//        super();
-//        this.code = code;
-//        this.message = message;
-//        this.stuData = stuData;
-//    }
+    private Data data;
 
     public int getCode() {
         return code;
@@ -33,23 +26,23 @@ public class StuInfo {
         this.message = message;
     }
 
-    public StuData getStuData() {
-        return stuData;
+    public Data getData() {
+        return data;
     }
 
-    public void setStuData(StuData stuData) {
-        this.stuData = stuData;
+    public void setData(Data data) {
+        this.data = data;
     }
 
-    public static class StuData{
+    public static class Data{
         private String student_id;
         private String access_token;
-        private long token_time;
+        private long expire;
 
-        public StuData(String student_id, String access_token, long token_time){
+        public Data(String student_id, String access_token, long expire){
             this.student_id = student_id;
             this.access_token = access_token;
-            this.token_time = token_time;
+            this.expire = expire;
         }
 
         public String getStudent_id() {
@@ -68,12 +61,12 @@ public class StuInfo {
             this.access_token = access_token;
         }
 
-        public long getToken_time() {
-            return token_time;
+        public long getexpire() {
+            return expire;
         }
 
-        public void setToken_time(long token_time) {
-            this.token_time = token_time;
+        public void setexpire(long expire) {
+            this.expire = expire;
         }
 
     }

@@ -3,7 +3,6 @@ package com.stay4it.retrofit.api.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.stay4it.retrofit.api.APIService;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -11,16 +10,15 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitUtil {
+public class RetrofitHelper {
     /**
      * 服务器地址
      */
-    private static final String API_HOST = "http://exam.appchizi.com/index.php/API";
-
+    private static final String API_HOST = "http://172.20.10.3/index.php/API/";
     private static Retrofit mRetrofit;
-    private static APIService mAPIService;
+    private static RetrofitHelper INSTANCE;
 
-    private static Retrofit getRetrofit() {
+    private  RetrofitHelper(){
         if (mRetrofit == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             // Log
@@ -36,16 +34,18 @@ public class RetrofitUtil {
                     .client(client)
                     .build();
         }
-        return mRetrofit;
     }
 
-    public static APIService getAPIService() {
-        if (mAPIService == null) {
-            mAPIService = getRetrofit().create(APIService.class);
+    public static RetrofitHelper getInstance() {
+        if (INSTANCE == null) {
+            synchronized (RetrofitHelper.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new RetrofitHelper();
+                }
+            }
         }
-        return mAPIService;
+        return INSTANCE;
     }
-
 
     public static Gson buildGson() {
         return new GsonBuilder()
@@ -55,5 +55,8 @@ public class RetrofitUtil {
                 .create();
     }
 
+    public <T> T getService(Class<T> service) {
+        return mRetrofit.create(service);
+    }
 
 }
